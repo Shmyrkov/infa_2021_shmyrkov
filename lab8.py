@@ -19,7 +19,11 @@ GAME_COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
 
 WIDTH = 800
 HEIGHT = 600
-i = 1
+koeff11 = 1
+koeff12 = 1
+koeff21 = 1
+koeff22 = 1
+
 
 class Ball:
     def __init__(self, screen: pygame.Surface, x=60, y=450):
@@ -75,7 +79,6 @@ class Ball:
             Возвращает True в случае столкновения мяча и цели. В противном случае возвращает False.
         """
         # FIXME
-        global i
         if (abs(obj.x - self.x) <= (self.r + obj.r) and abs(obj.y - self.y) <= (self.r + obj.r)):
             return 1
         if (abs(obj.x2 - self.x) <= (self.r + obj.r2) and abs(obj.y2 - self.y) <= (self.r + obj.r2)):
@@ -135,14 +138,18 @@ class Gun:
             self.color = RED
         else:
             self.color = GREY
-
-
 class Target():
     # self.points = 0
     # self.live = 1
     # FIXME: don't work!!! How to call this functions when object is created?
     # self.new_target()
     def __init__(self, screen):
+        self.x = 100
+        self.y = 450
+        self.x2 = 400
+        self.y2 = 100
+        self.r = 30
+        self.r2 = 20
         self.points = 0
         self.new_target()
         self.new_target2()
@@ -152,8 +159,8 @@ class Target():
 
     def new_target(self):
         """ Инициализация новой цели. """
-        self.x = rnd(400, 700)
-        self.y = rnd(300, 550)
+        self.x = rnd(200, 600)
+        self.y = rnd(50, 300)
         self.r = rnd(2, 50)
         self.color = choice(GAME_COLORS)
         self.live1 = 1
@@ -170,18 +177,40 @@ class Target():
         self.points += points
         print('YOU HAVE:', self.points, 'POINTS')
 
+    def move1(self):
+        global koeff11, koeff12, koeff21, koeff22
+        self.y += koeff11*10 + 1
+        self.x += koeff12*10 + 3
+        if self.y >= 500 or self.y <= 20:
+            koeff11 *= -1
+            self.y += 10*koeff11
+        if self.x > 780 or self.x < 0:
+            koeff12 *= -1
+            self.x += 10 * koeff12
+
+    def move2(self):
+        global koeff11, koeff12, koeff21, koeff22
+        self.y2 += koeff21 * 10 -5
+        self.x2 += koeff22 * 10 + 4
+        if self.y2 >= 500 or self.y2 <= 20:
+            koeff21 *= -1
+            self.y2 += 10 * koeff21
+        if self.x2 > 780 or self.x2 < 0:
+            koeff22 *= -1
+            self.x2 += 10 * koeff22
+
     def draw(self):
         pygame.draw.circle(
             self.screen,
             self.color,
             (self.x, self.y),
-            self.r)
+            self.r
+        )
         pygame.draw.circle(
             self.screen,
             self.color2,
             (self.x2, self.y2),
             self.r2)
-
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -198,6 +227,8 @@ while not finished:
     screen.fill(WHITE)
     gun.draw()
     target.draw()
+    target.move1()
+    target.move2()
     for b in balls:
         b.draw()
     pygame.display.update()
