@@ -44,7 +44,7 @@ class AbstractBall:
         self.vx = 0
         self.vy = 0
         self.color = choice(GAME_COLORS)
-        self.live = 30
+        self.live = 100
 
     def move(self):
         """Переместить мяч по прошествии единицы времени.
@@ -272,14 +272,19 @@ while not finished:
 
     for b in balls:
         b.move()
+        b.live -= 1
+        if b.live <=0:
+            balls.remove (b)
         if b.hittest(target1) == 1 and target1.live1:
             target1.live1 = 0
             target1.hit()
             target1.new_target1()
+            balls.remove(b)
         if b.hittest(target2) == 2 and target2.live2:
             target2.live2 = 0
             target2.hit()
             target2.new_target2()
+            balls.remove(b)
 
     gun.power_up()
 
