@@ -5,11 +5,11 @@ int main()
 {
     int summ = 0;
     int time = 0;
-    for (int i=0; i<100; ++i){
+    for (int i=0; i<1000; ++i){
         int x=i/2;
         int y=i/2;
-        for (int j=0; j<10; ++j)
-            while ((x!=i) and (y!=i) and (x!=0) and (y!=0)){
+        for (int j=0; j<100; ++j)
+            while ((x<i) and (y<i) and (x>0) and (y>0)){
                 std::random_device dev;
                 std::mt19937 rng(dev());
                 std::uniform_int_distribution<int>dist(0,100);
@@ -38,5 +38,6 @@ int main()
             summ = summ + time;
             time = 0;
         std::cout<<summ/10<<std::endl;
+        summ = 0;
 }
 }
