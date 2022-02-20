@@ -4,11 +4,11 @@
 
 int* Rand_coords_x(int* x_coords, int numb, int razm)
 {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int>dist(0, razm);
+    std::uniform_real_distribution<double> dist2(0, 1);
     for (int i = 0; i < numb; ++i) {
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<int>dist(0, razm);
-        std::uniform_real_distribution<double> dist2(0, 1);
         x_coords[i] = dist(rng);
     }
     return x_coords;
@@ -17,11 +17,11 @@ int* Rand_coords_x(int* x_coords, int numb, int razm)
 
 int* Rand_coords_y(int* y_coords, int numb, int razm)
 {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int>dist(0, razm);
+    std::uniform_real_distribution<double> dist2(0, 1);
     for (int i = 0; i < numb; ++i) {
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<int>dist(0, razm);
-        std::uniform_real_distribution<double> dist2(0, 1);
         y_coords[i] = dist(rng);
     }
     return y_coords;
@@ -67,13 +67,12 @@ int* check_sonapr_x(int* x_coords, int numb, int* life, int napr)
 
 int* mooving_x(int* x_coords, int numb, int* life)
 {
-
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int>dist(0, 100);
+    std::uniform_real_distribution<double> dist2(0, 1);
     for (int i = 0; i < numb; ++i)
     {
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<int>dist(0, 100);
-        std::uniform_real_distribution<double> dist2(0, 1);
         if (life[i] != 0)
         {
             if ((dist(rng)) % 2 == 0) {
@@ -109,12 +108,12 @@ int* check_sonapr_y(int* y_coords, int numb, int* life, int napr)
 
 int* mooving_y(int* y_coords, int numb, int* life)
 {
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int>dist(0, 100);
+    std::uniform_real_distribution<double> dist2(0, 1);
     for (int i = 0; i < numb; ++i)
     {
-        std::random_device dev;
-        std::mt19937 rng(dev());
-        std::uniform_int_distribution<int>dist(0, 100);
-        std::uniform_real_distribution<double> dist2(0, 1);
         if (life[i] != 0)
         {
             if ((dist(rng)) % 2 == 0) {
@@ -150,16 +149,16 @@ int main()
         life[i] = 1;
     }
     life_summ = numb;
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int>dist(0, 100);
+    std::uniform_real_distribution<double> dist2(0, 1);
     for (int i = 5; i < size; ++i)
     {
         for (int j = 0; j < 30; j++)
         {
             while (life_summ > 0)
             {
-                std::random_device dev;
-                std::mt19937 rng(dev());
-                std::uniform_int_distribution<int>dist(0, 100);
-                std::uniform_real_distribution<double> dist2(0, 1);
                 if ((dist(rng)) >= 50)
                 {
                     mooving_x(x_coords, numb, life);
@@ -190,9 +189,9 @@ int main()
                 life[o] = 1;
             }
         }
-        std::cout << summ/30 << std::endl;
+        std::cout << summ / 30 << std::endl;
         summ = 0;
         timer = 0;
-        
+
     }
 }
