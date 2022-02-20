@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <random>
 
 
@@ -49,6 +49,22 @@ int* Kasanie_check(int* x_coords, int* y_coords, int numb, int* life, int size)
 
 }
 
+int* check_sonapr_x(int* x_coords, int numb, int* life, int napr)
+{
+    for (int i = 0; i < numb; i++)
+    {
+        for (int j = 0; j < numb; j++)
+        {
+            if ((x_coords[i] == x_coords[j]) and i != j)
+            {
+                x_coords[i] = x_coords[i] + 1 * napr;
+
+            }
+        }
+    }
+    return x_coords;
+}
+
 int* mooving_x(int* x_coords, int numb, int* life)
 {
 
@@ -75,6 +91,22 @@ int* mooving_x(int* x_coords, int numb, int* life)
 
 }
 
+int* check_sonapr_y(int* y_coords, int numb, int* life, int napr)
+{
+    for (int i = 0; i < numb; i++)
+    {
+        for (int j = 0; j < numb; j++)
+        {
+            if ((y_coords[i] == y_coords[j]) and i != j)
+            {
+                y_coords[i] = y_coords[i] + 1 * napr;
+
+            }
+        }
+    }
+    return y_coords;
+}
+
 int* mooving_y(int* y_coords, int numb, int* life)
 {
     for (int i = 0; i < numb; ++i)
@@ -99,42 +131,6 @@ int* mooving_y(int* y_coords, int numb, int* life)
     return y_coords;
 
 }
-
-int* check_sonapr_x(int* x_coords, int numb, int* life, int napr)
-{
-    for (int i = 0; i < numb; i++)
-    {
-        for (int j = 0; j < numb; j++)
-        {
-            if ((x_coords[i] == x_coords[j]) and i != j)
-            {
-                x_coords[i] = x_coords[i] + 1 * napr;
-
-            }
-        }
-    }
-    return x_coords;
-}
-
-int* check_sonapr_y(int* y_coords, int numb, int* life, int napr)
-{
-    for (int i = 0; i < numb; i++)
-    {
-        for (int j = 0; j < numb; j++)
-        {
-            if ((y_coords[i] == y_coords[j]) and i != j)
-            {
-                y_coords[i] = y_coords[i] + 1 * napr;
-
-            }
-        }
-    }
-    return y_coords;
-}
-
-
-
-
 
 
 int main()
@@ -166,13 +162,11 @@ int main()
                 std::uniform_real_distribution<double> dist2(0, 1);
                 if ((dist(rng)) >= 50)
                 {
-                    check_sonapr_x(x_coords, y_coords, numb, life, napr);
                     mooving_x(x_coords, numb, life);
                     timer++;
                 }
                 else
                 {
-                    check_sonapr_y(x_coords, y_coords, numb, life, napr);
                     mooving_y(y_coords, numb, life);
                     timer++;
                 }
