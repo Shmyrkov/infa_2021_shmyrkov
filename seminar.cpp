@@ -30,6 +30,7 @@ void qsort(int *array, int size)
             --j;
         }
     } while (i<=j);
+    
 
     if (j>0)
     {
