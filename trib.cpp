@@ -12,6 +12,7 @@ int f(int n){
 
 int main()
 {
+    int n;
     cin>>n;
     cout<<f(n);
     
