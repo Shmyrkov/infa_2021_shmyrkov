@@ -30,4 +30,6 @@ int main()
         summ+=life[i];
     }
     cout<<summ;
-}
+    delete[] nachalo;
+    delete[] konec;
+    delete[] life;
