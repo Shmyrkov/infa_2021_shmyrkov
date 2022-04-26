@@ -33,3 +33,4 @@ int main()
     delete[] nachalo;
     delete[] konec;
     delete[] life;
+}
