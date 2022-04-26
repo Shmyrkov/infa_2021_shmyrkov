@@ -35,4 +35,5 @@ int main()
         }
     }
     std::cout << ost;
+    delete[] koords;
 }
