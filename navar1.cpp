@@ -40,4 +40,11 @@ int main()
         }
     }
     cout<<das[n-1][w];
+    delete[] price;
+    delete[] len;
+    for (int i = 0; i < n; ++i)
+    {
+        delete[] das[i];
+    }
+    delete[] das;
 }
