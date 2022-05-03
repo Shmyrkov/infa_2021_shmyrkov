@@ -1,66 +1,57 @@
 #include <iostream>
-#include <stack>
- 
-using namespace std;
- 
+#include <string>
+using std::string;
+
+bool skob(string seq){
+    int l = seq.length();
+    int p = 0;
+    if (l%2 == 1)
+        return false;
+    char arr[l/2];
+    for (int i=0; i<l; i++) {
+        if ((seq[i] == '(') || (seq[i] == '[') || (seq[i] == '{')) {
+            arr[p] = seq[i];
+            p++;
+        } else {
+            if (p == 0)
+                return false;
+            if (seq[i] == ')')
+            {
+                if (arr[p - 1] != '(')
+                {
+                    return false;
+                    break;
+                }
+                p--;
+            }
+            if (seq[i] == ']')
+            {
+                if (arr[p - 1] != '[')
+                {
+                    return false;
+                    break;
+                }
+                p--;
+            }
+            if (seq[i] == '}')
+            {
+                if (arr[p - 1] != '{')
+                {
+                    return false;
+                    break;
+                }
+                p--;
+            }
+            }
+        }
+    if (p == 0)
+        return true;
+    else
+        return false;
+}
+
+
 int main() {
-  string s = "";
-  cin >> s;
-  stack <char> st;
-  bool b = true;
-  int sz = int(s.size());
-  for (int i = 0; i < sz; i++) {
-    if (s[i] == '{' || s[i] == '(' || s[i] == '[')
-    {
-        st.push(s[i]);
-    }
-    else if (!st.empty()) 
-    {
-      if (s[i] == ']')
-      {
-          if (st.top() != '[')
-          {
-              b = false; 
-              break; 
-          } 
-          else
-            st.pop(); 
-      }
-      else if (s[i] == ')') 
-      {
-          if (st.top() != '(')
-          {
-              b = false; 
-              break; 
-          } 
-          else 
-            st.pop(); 
-      }
-      else if (s[i] == '}') 
-      {
-          if (st.top() != '{') 
-          {
-              b = false; 
-              break; 
-          } 
-          else 
-            st.pop(); 
-      }
-    }
-    else 
-    {
-        b = false; 
-        break; 
-    }
-  }
- 
-  if (int(st.size()) != 0) b = false;
-  if (b == true) 
-  {
-    cout << "yes";
-  }
-  else 
-  {
-      cout << "no";
-  }
+    string seq = "({})";
+    std::cout << skob(seq);
 }
