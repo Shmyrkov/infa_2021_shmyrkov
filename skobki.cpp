@@ -2,24 +2,27 @@
 #include <string>
 using std::string;
 
-bool skob(string seq){
-    int l = seq.length();
+
+bool skob(string seq, char *arr, int l){
     int p = 0;
     if (l%2 == 1)
         return false;
-    char* arr = new char[l/2];
-    for (int i=0; i<l; i++) {
-        if ((seq[i] == '(') || (seq[i] == '[') || (seq[i] == '{')) {
+    for (int i=0; i<l; i++) 
+    {
+        if ((seq[i] == '(') || (seq[i] == '[') || (seq[i] == '{')) 
+        {
             arr[p] = seq[i];
             p++;
-        } else {
+        } 
+        else 
+        {
             if (p == 0)
-                break;
+                return false;
             if (seq[i] == ')')
             {
                 if (arr[p - 1] != '(')
                 {
-                    break;
+                    return false;
                 }
                 p--;
             }
@@ -27,7 +30,7 @@ bool skob(string seq){
             {
                 if (arr[p - 1] != '[')
                 {
-                    break;
+                    return false;
                 }
                 p--;
             }
@@ -35,13 +38,12 @@ bool skob(string seq){
             {
                 if (arr[p - 1] != '{')
                 {
-                    break;
+                    return false;
                 }
                 p--;
             }
-            }
         }
-    delete[] arr;
+    }
     if (p == 0)
         return true;
     else
@@ -50,6 +52,9 @@ bool skob(string seq){
 
 
 int main() {
-    string seq = "(([{}]))";
-    std::cout << skob(seq);
+    string seq = "(([{}]))[]{}";
+    int l = seq.length();
+    char* arr = new char[l/2];
+    std::cout << skob(seq, arr, l);
+    delete[] arr;
 }
