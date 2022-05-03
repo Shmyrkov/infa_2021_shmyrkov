@@ -14,7 +14,7 @@ bool skob(string seq){
             p++;
         } else {
             if (p == 0)
-                return false;
+                break;
             if (seq[i] == ')')
             {
                 if (arr[p - 1] != '(')
