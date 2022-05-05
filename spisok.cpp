@@ -148,7 +148,6 @@ struct List
         for (int j = 0; j < i; j++) {
             p = p->next;
         }
-        delete p;
         return (*p);
     }
     
