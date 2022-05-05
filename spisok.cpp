@@ -93,6 +93,7 @@ struct List
         p->next = nullptr;
         delete last;
         last = p;
+        delete p;
         size--;
     }
     
