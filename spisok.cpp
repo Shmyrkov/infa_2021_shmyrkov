@@ -10,6 +10,11 @@ struct Node
         val = value;
         next = next_node;
     }
+    ~Node() 
+    {
+        val = 0;
+        next = nullptr;
+    }
 };
 
 struct List 
