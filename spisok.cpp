@@ -63,6 +63,7 @@ struct List
             p = p->next;
         }
         cout << endl;
+        delete p;
     }
     
     int length()
@@ -104,6 +105,7 @@ struct List
             p = p->next;
         }
         return p->val;
+        delete p;
     }
     
     void remove(int idx)
@@ -125,6 +127,7 @@ struct List
         Node* del = p->next;
         p->next = del->next;
         delete del;
+        delete p;
         size--;
     }
     
@@ -144,6 +147,7 @@ struct List
         for (int j = 0; j < i; j++) {
             p = p->next;
         }
+        delete p;
         return (*p);
     }
     
@@ -161,6 +165,7 @@ struct List
         Node *p = new Node(new_val, &(*this)[idx]);
         (*this)[idx-1].next = p;
         size++;
+        delete p;
     }
 
 };
@@ -177,7 +182,7 @@ int main()
     l.push_front(3);
     l.push_front(5);
     l.push_front(9);
-    l.insert(15, 2);
+    l.insert(15, 0);
     l.print();
     
 }
