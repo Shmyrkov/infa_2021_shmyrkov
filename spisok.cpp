@@ -36,7 +36,6 @@ struct List
             last = p;
         }
         size++;
-        delete p;
     }
     void push_front (int new_val) 
     {
