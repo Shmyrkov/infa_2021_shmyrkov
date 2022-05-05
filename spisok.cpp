@@ -167,6 +167,10 @@ struct List
         size++;
         delete p;
     }
+    ~List() 
+    {
+        this->clear();
+    }
 
 };
 
@@ -184,5 +188,4 @@ int main()
     l.push_front(9);
     l.insert(15, 0);
     l.print();
-    l.clear();
 }
