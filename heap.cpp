@@ -24,6 +24,7 @@ void Heapify(int *array, int n, int i)
     if (largest != i)
     {
         swap(array[largest], array[i]);
+        Heapify(array, n, largest);
     }
 }
 
