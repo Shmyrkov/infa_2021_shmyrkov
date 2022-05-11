@@ -53,6 +53,7 @@ struct List
         else 
         {
             p->next = first;
+            first -> prev = p;
             p->prev = nullptr;
             first = p;
         }
@@ -114,14 +115,82 @@ struct List
         return p->val;
         delete p;
     }
+    
+
+    void remove(int idx)
+    {
+        if (size == 0) return;
+        if (idx == 0)
+        {
+            remove_first();
+            return;
+        }
+        Node* p = first;
+        for (int i = 0; i < idx - 1; i++)
+        {
+            p = p->next;
+        }
+        Node* del = p->next;
+        p->next = del->next;
+        delete del;
+        size--;
+    }
+    
+    void clear()
+    {
+        while(first)
+        {
+            Node* p = first->next;
+            delete first;
+            first = p;
+            size--;
+        }
+    }
+
+    Node& operator[](int i) 
+    {
+        Node* p = first;
+        for (int j = 0; j < i; j++) {
+            p = p->next;
+        }
+        return (*p);
+    }
+    
+    void insert(int new_val, int idx)
+    {
+        if (size == 0 or idx == 0) 
+        {
+            this->push_front(new_val);
+            return;
+        }
+        if (idx == size) {
+            this->push_back(new_val);
+            return;
+        }
+        Node *p = new Node(new_val, &(*this)[idx], &(*this)[idx-1]);
+        (*this)[idx-1].next = p;
+        (*this)[idx+1].prev = p;
+        size++;
+    }
+
+    ~List() 
+    {
+        this->clear();
+    }
+
+
 };
 
 int main() 
 {
     List l;
-    l.push_front(3);
-    l.push_front(5);
+    l.push_back(3);
+    l.push_back(5);
+    l.push_back(9);
+    l.clear();
     l.push_front(9);
-    l.remove_last();
+    l.push_front(5);
+    l.push_front(3);
+    l.insert(10,2);
     l.print();
 }
