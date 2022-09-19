@@ -1,6 +1,12 @@
 #include <iostream>
 #include <string>
 using namespace std;
+ 
+string expr;
+uint32_t i = 1;
+int oper_place1 = 0;
+int oper_place2 = 0;
+int k = 0;
 
 struct Point 
 {
@@ -61,39 +67,97 @@ public:
     }
 };
 
+pair<int, int> chisl1 (int a1, int b1)
+{
+  bool b = false;
+  while (i < expr.size()) {
+    if (expr[i] == ')') break;
+    if (expr[i] == ' ' or expr[i] == '(' ) continue;
+    if (expr[i] == ',') 
+    {
+      b = true;
+      ++i;
+    }
+    if (b==false) 
+    {
+      a1 *= 10;
+      a1 += expr[i] - '0';
+    } 
+    else 
+    {
+      b1 *= 10;
+      b1 += expr[i] - '0';
+    }
+    ++i;
+  }
+  return {a1, b1};
+  
+}
+
+void place1()
+{
+    
+    while ( k<expr.size() )
+    {
+        k++;
+        if (expr[k] == '*' or expr[k] == '+') {
+            break;
+        }
+    }
+}
+    
+bool check2()
+{
+    int f = 0;
+    int l = 0;
+    while (l<expr.size())
+    {
+        if (expr[l] == ')') f++;
+        l++;
+    }
+    if (f==3) return true;
+    else return false;
+}
+    
+
  
 
 int main()
 {
-    char a, b, c, d;
-    int a1,b1,c1,d1;
-    string s;
-    getline(cin, s);
-    int k = 0;
-    for (auto i : s)
+    getline(cin, expr);
+    int a1 = 0, a2 = 0, b1 = 0, b2 = 0, c1 = 0, c2 =0, o = 0;
+    auto res = chisl1(a1,b1);
+    Point q(res.first,res.second);
+    Rectangle t(q);
+    i+=5;
+    auto res2 = chisl1(b1,b2);
+    Point v(res2.first,res2.second);
+    Rectangle plus = t + v;
+    Rectangle umn = t * v;
+    place1();
+    check2();
+    if (check2() == false) 
     {
-        int u = int(i);
-        if ((int(i) >= 48) & (int(i) <= 58))
-        {
-            if (k == 0) a = i;
-            if (k == 1) b = i;
-            if (k == 2) c = i;
-            if (k == 3) d = i;
-            k++;
-        }
+        if (expr[k] == '*') umn.print2();
+        else plus.print2();
     }
-    a1 = a - '0';
-    b1 = b - '0';
-    c1 = c - '0';
-    d1 = d - '0';
-    Point q(a1,b1);
-    Point w(c1,d1);
-    Rectangle e(q);
-    Rectangle r(w);
-    Rectangle plus = e + r;
-    Rectangle umn = e*r;
-    if (s[6]=='*') umn.print2();
-    else plus.print2();
-    
-    
+    else 
+    {
+        o = k;
+        k++;
+        i+=5;
+        auto res3 = chisl1(a1,b1);
+        place1();
+        Point g(res3.first,res3.second);
+        Rectangle l(g);
+        Rectangle pl = plus + l;
+        Rectangle umnn = umn * l;
+        Rectangle plumn = umn + l;
+        Rectangle umn2 = l*v;
+        Rectangle last = t + umn2;
+        if (expr[o]=='+' and expr[k]=='+') pl.print2();
+        if (expr[o]=='*' and expr[k]=='*') umnn.print2();
+        if (expr[o]=='*' and expr[k]=='+') plumn.print2();
+        if (expr[o]=='+' and expr[k]=='*') last.print2();
+    }
 }
