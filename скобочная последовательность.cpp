@@ -1,108 +1,55 @@
-﻿#include <iostream>
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+using namespace std;
 
-int summ = 0;
-
-
-int check(char c)
+int compare(const void * x1, const void * x2)
 {
-	if (c == '(') {
-		summ++;
+    return ( *(int*)x1 - *(int*)x2 );
+}
 
-	}
-	else {
-		summ--;
-	}
-	if (summ < 0) {
-		return -1;
-	}
-	else {
-		return summ;
-	}
+void swap(void* x1, void* x2, size_t size)
+{
+    void* save = malloc(size);
+    memcpy(save, x1, size);
+    memcpy(x1, x2, size);
+    memcpy(x2, save, size);
+    free(save);
+}
+
+void qqsort (void * first, size_t number, size_t size, int (*comparator) (const void *, const void*))
+{
+    void *baze = (char *) first + (number - 1) * size;
+    int i = 0;
+    for (int j = 0; j < number; j++)
+    {
+        if (comparator((char *) first + j * size, baze) <= 0)
+        {
+            swap((char *) first + j * size, (char *) first + i * size, size);
+            i = i + 1;
+        }
+    }
+
+    if (i - 1 > 1)
+        qqsort(first, i - 1, size, compare);
+    if (number - i > 1)
+        qqsort((char*) first + i * size, number - i, size, compare);
 }
 
 int main()
 {
-	int n;
-	std::cin >> n;
-	for (int i = 0; i < n; ++i)
-	{
-		char c;
-		int a;
-		std::cin >> c;
-		a = check(c);
-		if (a < 0) {
-			std::cout << "- 1" << std::endl;
-			break;
-		}
-
-
-	}
-
-	if (summ == 0) {
-		std::cout << '1' << std::endl;
-	}
-	if (summ > 0) {
-		std::cout << " - 1" << std::endl;
-	}
-
-
-
-
-
-}
-
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-
-void generic_swap(void *lha, void *rha, size_t element_byte_size) {
-    void *tmp = malloc(element_byte_size);
-    std::memcpy(tmp, lha, element_byte_size);
-    std::memcpy(lha, rha, element_byte_size);
-    std::memcpy(rha, tmp, element_byte_size);
-    free(tmp);
-}
-
-void qsort ( void * src_begin , size_t n_memb , size_t type_size , int (* compare ) ( const void * ,
-                                                                                      const void *) ) {
-    int i = 0;
-    int j = n_memb - 1;
-    int mid = n_memb / 2;
-    do {
-        while(compare(( const char *)src_begin + i * type_size, ( const char *)src_begin + mid * type_size)) i++;
-        while(compare(( const char *)src_begin + mid * type_size, ( const char *)src_begin + j * type_size)) j++;
-        if (i <= j) {
-            generic_swap((char *)src_begin + i * type_size, (char *)src_begin + j * type_size, type_size);
-            i++;
-            j--;
-        }
-    } while (i <= j);
-    if(j > 0) {
-        qsort(src_begin, j + 1, type_size, compare);
+    int n = 0;
+    cin>>n;
+    int *mass1 = new int[n];
+    for (int i = 0; i < n; i++) 
+    {
+        cin>>mass1[i];
     }
-    if (i < n_memb) {
-        qsort((char *)src_begin + i * type_size, n_memb - i, type_size, compare);
+    qqsort(mass1, n, sizeof(int), compare);
+
+    for (int i = 0; i < n; i++)
+    {
+        cout<<mass1[i]<<" ";
     }
-}
-
-
-struct Student {
-    size_t id ;
-    size_t money ;
-};
-
-
-int student_cmp ( const void * lha , const void * rha ) {
-    size_t a = (( const Student *) lha ) -> id ;
-    size_t b = (( const Student *) rha ) -> id ;
-    return int(a<b) ;
-}
-
-int main() {
-    Student b[4] = {{42 , 100 } , {137 , 150 } , {993 , 1000 }, {114, 10}};
-    qsort(b, 4, sizeof(Student), student_cmp);
-    for (int i = 0; i < 4; i++) {
-        std::cout << b[i].id << " ";
-    }
-    return 0;
+    delete [] mass1;
 }
