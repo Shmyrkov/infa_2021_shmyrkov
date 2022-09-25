@@ -100,18 +100,22 @@ public:
         return static_cast<float>(good) / static_cast<float>(test_count);
     }
 };
-
 int main() {
-    int a = 1000;
+    int a = 100;
     DiscreteState d(0);
     SegmentState s(0, 300);
     SegmentState s1(5, 15);
     cout << "Task 1: Probability from number of tests " << endl;
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 50; ++i)
     {
-        ProbabilityTest pt(100, 0, 1000, a*i);
-        cout << round(pt.test(s) * 1000000) / 1000000;
-        cout << setw(10) << a * i << endl;
+        float summ = 0;
+        for (int k = 0; k < 500; k++)
+        {
+            ProbabilityTest pt(k, 0, 1000, a * i);
+            summ += pt.test(s);
+        }
+        cout << a * i << endl;
+        
        
     }
     cout << "Task 2: verification of agreement with theory " << endl;
@@ -120,3 +124,4 @@ int main() {
     cout << "Theoretical probability = " << с << endl;
     cout << "Programming probability = " << pt1.test(s) << endl;
 }
+
