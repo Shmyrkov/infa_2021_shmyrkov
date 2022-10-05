@@ -37,7 +37,7 @@ void hoarasort(T * a, int first, int  last)
 {
     auto cmp = DoubleComparator();
     int i = first, j = last;
-    auto tmp = 0, x = a[(first + last) / 2];
+    T tmp = 0, x = a[(first + last) / 2];
 
     do {
         while (cmp(a[i],x))
